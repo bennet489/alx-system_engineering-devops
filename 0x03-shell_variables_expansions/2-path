@@ -1,2 +1,2 @@
 #!/bin/bash
-echo $(printf $PATH/action | tr "/action" "\n" | wc -w)
+PATH=$PATH:/action
