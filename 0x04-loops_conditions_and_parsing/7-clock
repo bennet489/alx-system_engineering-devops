@@ -10,6 +10,5 @@ do
     do
         echo $MINUTES
 	let MINUTES+=1
-    done
     HOURS=$((HOURS + 1))
 done
