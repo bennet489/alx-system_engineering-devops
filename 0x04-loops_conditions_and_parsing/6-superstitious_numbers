@@ -26,5 +26,5 @@ do
 	    ;;
     esac
 
-    let COUNTER+=1
+    COUNTER=$((COUNTER + 1))
 done
