@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# A script that starts Apache2 in our docker container and return to a page 
+# containing Hello World!
+docker run -p 8080:80 -d -it holbertonschool/265-0
+
+docker exec -it 47ca3994a4910bbc29d1d8925b1c70e1bdd799f5442040365a7cb9a0db218021 /bin/bash
+
+service apache2 start
+
+cat /var/log/apache2/error.log
