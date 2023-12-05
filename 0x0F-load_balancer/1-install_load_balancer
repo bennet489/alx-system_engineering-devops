@@ -17,3 +17,4 @@ sudo echo "
 " >> /etc/haproxy/haproxy.cfg
 sudo haproxy -f /etc/haproxy/haproxy.cfg -c
 sudo service haproxy restart
+
