@@ -1,26 +1,25 @@
 #!/usr/bin/env bash
-# Configure server with: Nginx, custom 404, custom 301 redirect to google
-# Add to HTTP header
-
-ADD301_REDIRECT="\\\tlocation /redirect_me {\n\t\t return 301 https://google.com;\n\t}\n"
-ADD404_NOTFOUND="error_page 404 /custom_404.html;\n\\tlocation = /custom_404.html {\n\t\t root /usr/share/nginx/html;\n\t\tinternal;\n\t}\n"
-PATTERN="#error_page 404 /404.html;"
-ADD_HEADER="\\\tadd_header X-Served-By $HOSTNAME;"
-
-sudo apt-get update
+# Configures a new Ubuntu machine with nginx
+sudo apt-get -y update
 sudo apt-get -y install nginx
-sudo service nginx start
-
-echo "Hello World!" | sudo tee /usr/share/nginx/html/index.html
-
-# melissax.online/redirect_me redirects to google.com (add to line 30)
-sudo sed -i "30i $ADD301_REDIRECT" /etc/nginx/sites-available/default
-
-# Any page that errors shows this new custom_404.html page (uncomment and replace code)
-echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/custom_404.html
-sudo sed -i "s@$PATTERN@$ADD404_NOTFOUND@" /etc/nginx/sites-available/default
-
-# Header is updated (add_header to file)
-sudo sed -i "27i $ADD_HEADER" /etc/nginx/sites-available/default
-
+sudo ufw allow "Nginx HTTP" # allow incoming connections from nginx
+# sudo ufw status verbose: should return inactive
+cd /var/www/ || return
+sudo chmod 777 html
+echo "Hello World!" > html/index.html
+sudo chmod 755 html
+# Configure your Nginx server to redirect to another page
+REDIRECT_CONFIG="\tlocation /redirect_me {\n\t\treturn 301 https://www.alxafrica.com;\n\t}"
+sudo sed -i "52 a \    $REDIRECT_CONFIG" /etc/nginx/sites-enabled/default
+# Configure your Nginx server to have a custom 404 page
+cd /etc/nginx/
+sudo mkdir -p html
+sudo chmod 777 html
+echo "Ceci n'est pas une page" > html/404.html
+sudo chmod 755 html
+CUSTOM404PAGE_CONFIG="\terror_page 404 /404.html;\n\tlocation /404 {\n\t\troot /etc/nginx/html;\n\t\tinternal;\n\t}"
+sudo sed -i "55 a \    $CUSTOM404PAGE_CONFIG" /etc/nginx/sites-enabled/default
+# Configure your Nginx server with a custom header
+CUSTOMHEADER_CONFIG="add_header X-Served-By \"$HOSTNAME\";"
+sudo sed -i "62 a \        $CUSTOMHEADER_CONFIG" /etc/nginx/nginx.conf
 sudo service nginx restart
