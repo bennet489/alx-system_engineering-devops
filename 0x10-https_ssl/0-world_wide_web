@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
-# Usage: ./1-world_wide_web <domain> <subdomain>
-# Display information about subdomains.
-
-domain_information () {
-    line=$(dig "$2"."$1" | grep -A1 'ANSWER SECTION:' | tr '\t' '\n' | tail -2 | tr '\n' ' ')
-    echo "$2 $line" | awk '{print "The subdomain " $1 " is a " $2 " record and points to " $3}'
+# Displays information about a sub domain.
+info_domain () {
+    answer=$(dig "$1" | grep -A1 'ANSWER SECTION' | tail -n 1)
+	sub_d=$(echo "$answer" | awk -F'.' '{print $1}')
+	record=$(echo "$answer" | awk '{print $4}')
+	destination=$(echo "$answer" | awk '{print $5}')
+	echo "The subdomain $sub_d is a $record record and points to $destination"
 }
 
-if [ "$#" == 1 ]
-then
-  domain_information "$1" "www"
-  domain_information "$1" "lb-01"
-  domain_information "$1" "web-01"
-  domain_information "$1" "web-02"
-elif [ "$#" == 2 ]
-then
-  domain_information "$1" "$2"
+if [ $# -gt 1 ]; then
+	info_domain "$2.$1"
+elif [ $# -lt 2 ]; then
+    info_domain "www.$1"
+	info_domain "lb-01.$1"
+	info_domain "web-01.$1"
+	info_domain "web-02.$1"
 fi
