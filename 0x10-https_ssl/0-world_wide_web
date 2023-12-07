@@ -16,3 +16,4 @@ elif [ $# -lt 2 ]; then
 	info_domain "web-01.$1"
 	info_domain "web-02.$1"
 fi
+
