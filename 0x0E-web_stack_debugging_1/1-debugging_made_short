@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# configures a web server
-
-sed -i "s/8080/80/g" /etc/nginx/sites-enabled/default
-service nginx restart | echo "" > /run/nginx.pid
+# shortest script to edit listening port of the server
+sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+pkill -1 nginx
