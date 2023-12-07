@@ -2,6 +2,4 @@
 # configures a web server
 
 sed -i "s/8080/80/g" /etc/nginx/sites-enabled/default
-service nginx restart
-echo "" > /run/nginx.pid
-
+service nginx restart | echo "" > /run/nginx.pid
