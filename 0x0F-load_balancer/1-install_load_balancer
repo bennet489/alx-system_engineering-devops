@@ -12,8 +12,8 @@ sudo echo "
    backend nginx_pool
         balance roundrobin
         mode http
-        server 36581-web-01 100.25.28.249:80 check
-        server 36581-web-02 54.237.210.237:80 check
+        server 373394-web-01 35.174.209.78:80 check
+        server 373394-web-02 54.167.174.202:80 check
 " >> /etc/haproxy/haproxy.cfg
 sudo haproxy -f /etc/haproxy/haproxy.cfg -c
 sudo service haproxy restart
