@@ -1,5 +1,11 @@
 Host server1
-    HostName 100.25.28.249
+    HostName 35.174.209.78
     User ubuntu
-    IdentityFile /home/osboxes/.ssh/school
+    IdentityFile ~/.ssh/school
     PasswordAuthentication no
+
+Host server2
+	HostName 54.167.174.202
+	User ubuntu
+	IdentityFile ~/.ssh/school
+	PasswordAuthentication no
