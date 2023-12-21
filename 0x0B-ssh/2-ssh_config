@@ -1,5 +1,5 @@
 Host server1
-    HostName 18.210.20.24
+    HostName 100.25.28.249
     User ubuntu
-    IdentityFile ~/.ssh/school
+    IdentityFile /home/osboxes/.ssh/school
     PasswordAuthentication no
