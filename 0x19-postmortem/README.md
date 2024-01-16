@@ -41,6 +41,3 @@ Advanced Tasks
 We are constantly stormed by a quantity of information, it’s tough to get people to read you.
 
 Make your post-mortem attractive by adding humour, a pretty diagram or anything that would catch your audience attention.
-Student
-
-    Bennet A-A
