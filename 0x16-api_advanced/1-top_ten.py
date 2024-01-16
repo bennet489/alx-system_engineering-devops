@@ -1,28 +1,35 @@
 #!/usr/bin/python3
-""" 0x16. API advanced, task 1. Top Ten
+"""script for parsing web data from an api
 """
-from requests import get
+import json
+import requests
+import sys
 
 
 def top_ten(subreddit):
-    """ Queries Reddit API and prints titles of first 10 "hot" posts listed for
-    a given subreddit.
-
-    Args:
-        subreddit (str): subreddit to query
+    """api call to reddit to get the number of subscribers
     """
-    # adding request parameter `raw_json` deactivates default ampersand escape
-    url = 'https://www.reddit.com/r/{}/hot.json?raw_json=1'
-    response = get(url.format(subreddit),
-                   headers={'User-Agent': 'bennet489-app1'})
-    if response.status_code != 200:
-        print(None)
-        return
-    hot_posts = response.json().get('data').get('children', [])
-    if not hot_posts:
-        print(None)
-        return
-    for i, post in enumerate(hot_posts):
+    base_url = 'https://www.reddit.com/r/'
+    headers = {
+        'User-Agent':
+        'Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) \
+        Gecko/20100401 Firefox/3.6.3 (FM Scene 4.6.1)'
+    }
+    # grab info about all users
+    url = base_url + '{}/top/.json?count=10'.format(subreddit)
+    response = requests.get(url, headers=headers)
+    resp = json.loads(response.text)
+
+    try:
+        # grab the info about the users' tasks
+        data = resp.get('data')
+        children = data.get('children')
+    except:
+        print('None')
+    if children is None or data is None or len(children) < 1:
+        print('None')
+
+    for i, post_dict in enumerate(children):
         if i == 10:
             break
-        print(post.get('data').get('title', ''))
+        print(post_dict.get('data').get('title'))
