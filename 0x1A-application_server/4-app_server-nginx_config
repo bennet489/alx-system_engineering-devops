@@ -50,6 +50,12 @@ rewrite ^/redirect_me https://github.com/bennet489/ permanent;
 		# First attempt to serve request as file, then
 		# as directory, then fall back to displaying a 404.
 		try_files $uri $uri/ =404;
+		include proxy_params;
+		proxy_pass http://127.0.0.1:5003/2-hbnb;
+	}
+
+	location /static/ {
+		root /home/ubuntu/AirBnB_clone_v4/web_dynamic/;
 	}
 
 	location = /airbnb-onepage/ {
