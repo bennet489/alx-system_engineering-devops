@@ -1,9 +1,8 @@
 [Unit]
 Description=Gunicorn application server for AirBnB_clone_v4
-Author=Brennan D Baraban
 
 [Service]
-ExecStart=/usr/local/bin/gunicorn --workers 3 --bind 0.0.0.0:5003 web_dynamic.2-hbnb:app
+ExecStart=/usr/local/bin/gunicorn --workers 3 --bind 0.0.0.0:5003 --error-logfile /tmp/airbnb-error.log --access-logfile /tmp/airbnb-access.log web_dynamic.2-hbnb:app
 Restart=always
 StandardOutput=syslog
 StandardError=syslog
