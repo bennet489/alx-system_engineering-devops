@@ -1,6 +1,6 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 # Check if Gunicorn is running
+
 if pgrep -x "gunicorn" > /dev/null; then
     echo "Reloading Gunicorn..."
     pkill -HUP -f gunicorn
